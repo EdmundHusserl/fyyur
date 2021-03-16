@@ -21,19 +21,14 @@ import os
 from flask_migrate import Migrate
 from typing import List
 from psycopg2.errors import UniqueViolation
+from models import create_db
 
 # App config
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config.DevelopmentConfig')
 app.config.from_envvar("APP_SETTINGS")
-
-from models import (
-    db, 
-    Venue,
-    Artist,
-    Show
-)
+db, Venue, Artist, Show = create_db(app)
 
 # DB migrations
 migrate = Migrate(app, db)
